@@ -1,4 +1,4 @@
-import "./App.css";
+import "./App.scss";
 import { BrowserRouter } from "react-router-dom";
 import Body from "./components/layout/Body";
 import Header from "./components/layout/Header";
