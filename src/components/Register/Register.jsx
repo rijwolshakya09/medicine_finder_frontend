@@ -92,7 +92,7 @@ const Register = () => {
       .then((response) => {
         console.log(response);
         if (response.status === 201) {
-          toast.success("User Registered Sucessfully", {
+          toast.success("Pharmacy Registered Sucessfully", {
             position: "top-center",
             autoClose: 4000,
           });

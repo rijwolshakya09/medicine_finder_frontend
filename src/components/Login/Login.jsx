@@ -5,6 +5,7 @@ import Container from "@mui/material/Container";
 import background from "../../assets/images/MedicineBack.svg";
 import KeyIcon from "@mui/icons-material/Key";
 import "./login.scss";
+import { useState } from "react";
 import {
   Button,
   Card,
@@ -20,6 +21,8 @@ import {
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 const Login = () => {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -28,6 +31,61 @@ const Login = () => {
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
+  };
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
+
+  const login = (e) => {
+    e.preventDefault();
+
+    if (username.length === 0 || password.length === 0) {
+      setError(true);
+    }
+
+    const data = {
+      username: username,
+      password: password,
+    };
+    axios
+      .post("http://localhost:90/pharmacy/login", data)
+      .then((res) => {
+        console.log(res);
+        if (res.data.token) {
+          console.log(res.data);
+          localStorage.setItem("userType", res.data.userType);
+          localStorage.setItem("token", res.data.token);
+          localStorage.setItem("username", username);
+          toast.success("Pharmacy User Logged In  Sucessfully", {
+            position: "top-center",
+            autoClose: 4000,
+          });
+          window.location.replace("/dashboard");
+          // if (localStorage.getItem("userType") === "admin") {
+          //   // console.log(res)
+          //   window.location.replace("/dashboard_admin");
+          // } else {
+          //   console.log(res.data);
+          //   window.location.replace("/dashboard");
+          // }
+        } else {
+          toast.error("Pharmacy User Not Logged In", {
+            toastId: "error",
+            position: "top-center",
+            autoClose: 4000,
+          });
+          console.log(res);
+        }
+      })
+      .catch((e) => {
+        toast.error("Pharmacy User Not Registered", {
+          toastId: "error",
+          position: "top-center",
+          autoClose: 4000,
+        });
+        console.log(e);
+      });
   };
   return (
     <div>
@@ -85,9 +143,14 @@ const Login = () => {
                     ),
                   }}
                   onChange={(e) => {
-                    // setName(e.target.value);
+                    setUsername(e.target.value);
                   }}
                 />
+                {error && username.length <= 0 ? (
+                  <label>Username cannot be empty</label>
+                ) : (
+                  ""
+                )}
                 <FormControl fullWidth required width="100%" variant="outlined">
                   <InputLabel htmlFor="outlined-adornment-password">
                     Password
@@ -114,8 +177,16 @@ const Login = () => {
                       </InputAdornment>
                     }
                     label="Password"
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                    }}
                   />
                 </FormControl>
+                {error && password.length <= 0 ? (
+                  <label>Password cannot be empty</label>
+                ) : (
+                  ""
+                )}
               </Box>
               <CardActions>
                 <Button
@@ -123,6 +194,7 @@ const Login = () => {
                   className="login-btn"
                   // sx={{ backgroundColor: "#6BB3ED" }}
                   endIcon={<Icon icon="majesticons:login" />}
+                  onClick={login}
                 >
                   Login
                 </Button>
@@ -130,7 +202,9 @@ const Login = () => {
               <Divider sx={{ width: "100%", color: "#000000", border: 0.9 }} />
               <Box sx={{ display: "flex", mt: 2 }}>
                 <p>Don't Have An Account?</p>
-                <Link className="px-2 registerlink" to="/register">Register</Link>
+                <Link className="px-2 registerlink" to="/register">
+                  Register
+                </Link>
               </Box>
             </Card>
           </Box>
