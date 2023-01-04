@@ -1,17 +1,17 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import PersistentDrawerLeft from "../Dashboard";
+import Dashboard from "../Dashboard";
 
-import DashboardAdmin from "../DashboardAdmin";
+import Login from "../Login/Login";
 
 const Body = () => {
   return (
     <>
       <Routes>
-        <Route path="/" element={<DashboardAdmin />} />
+        <Route path="/" element={<Login />} />
         {/* <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} /> */}
-        <Route path="/dashboard" element={<PersistentDrawerLeft />}>
+        <Route path="/dashboard" element={<Dashboard />}>
           {/* <Route path="" element={<DashboardHome />} />
           <Route path="admin_approve" element={<AdminApprove />} />
           <Route path="audio_book" element={<AudioBookUpload />} />
