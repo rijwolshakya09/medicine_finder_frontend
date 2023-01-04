@@ -1,15 +1,15 @@
 import "./App.scss";
 import { BrowserRouter } from "react-router-dom";
 import Body from "./components/layout/Body";
-import { Footer } from "antd/lib/layout/layout";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <Body />
-        <Footer />
       </BrowserRouter>
+      <ToastContainer></ToastContainer>
     </>
   );
 }
