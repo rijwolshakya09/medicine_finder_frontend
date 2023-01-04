@@ -130,7 +130,7 @@ const Login = () => {
               <Divider sx={{ width: "100%", color: "#000000", border: 0.9 }} />
               <Box sx={{ display: "flex", mt: 2 }}>
                 <p>Don't Have An Account?</p>
-                <Link className="px-2 registerlink">Register</Link>
+                <Link className="px-2 registerlink" to="/register">Register</Link>
               </Box>
             </Card>
           </Box>

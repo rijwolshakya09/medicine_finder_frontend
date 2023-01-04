@@ -1,0 +1,41 @@
+.registercontainer{
+    padding: 0 !important;
+}
+
+.register-img{
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+}
+
+.card-register{
+  border-radius: 12px !important;
+  box-shadow: 4px 6px 6px rgba(0, 0, 0, 0.45) !important;
+}
+
+.register-btn{
+  font-weight: 600 !important;
+  font-family: "Poppins" !important;
+  font-size: 16px !important;
+  background: #6BB3ED !important;
+  border-radius: 12px !important;
+  color: #fff !important;
+  border: none !important;
+  transition: all 0.3s !important;
+  cursor: pointer !important;
+  &:hover {
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25) !important;
+  }
+}
+
+.register-title{
+  font-family: "Merienda";
+  font-weight: bold;
+  padding-bottom: 8px;
+  text-decoration: underline;
+}
+
+.registerlink{
+  color: #60b1f3 !important;;
+}
