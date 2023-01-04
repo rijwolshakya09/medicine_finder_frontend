@@ -19,7 +19,6 @@ const Home = () => {
   const [pharmacy_pic, setPharmacyPic] = useState("");
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
 
   const config = {
     headers: {
@@ -75,7 +74,7 @@ const Home = () => {
           alt="green iguana"
         />
         <CardContent
-          sx={{ width: "100%", mx: 1, p: 4, background: "#6BB3ED" }}
+          sx={{ width: "100%", marginLeft:1, p: 4, background: "#6BB3ED" }}
           className="profile-content rounded"
         >
           <Typography
@@ -232,7 +231,7 @@ const Home = () => {
           alt="green iguana"
         />
         <CardContent
-          sx={{ width: "100%", mx: 1, p: 4, background: "#6BB3ED" }}
+          sx={{ width: "100%", marginLeft:1, p: 4, background: "#6BB3ED" }}
           className="pharmacy-content rounded"
         >
           <Typography

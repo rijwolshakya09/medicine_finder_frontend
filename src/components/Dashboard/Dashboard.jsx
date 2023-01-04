@@ -15,11 +15,13 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
+import { useState, useEffect } from "react";
 
 import { useTheme } from "@mui/material/styles";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import { BrowserView, MobileView } from "react-device-detect";
 import {
+  Avatar,
   Divider,
   Drawer,
   List,
@@ -38,6 +40,7 @@ import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import PlayLessonIcon from "@mui/icons-material/PlayLesson";
 import LogoutIcon from "@mui/icons-material/Logout";
+import axios from "axios";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -122,6 +125,11 @@ export default function PrimarySearchAppBar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const logout = () => {
+    localStorage.clear();
+    window.location.replace("/");
+  };
+
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -203,6 +211,23 @@ export default function PrimarySearchAppBar() {
     setMobileOpen(!mobileOpen);
   };
 
+  const [profile_pic, setProfilePic] = useState("");
+  const [username, setUsername] = useState("");
+
+  const config = {
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("token"),
+    },
+  };
+
+  useEffect(() => {
+    axios.get("http://localhost:90/pharmacy/get", config).then((res) => {
+      console.log(res.data);
+      setProfilePic(res.data.data.profile_pic);
+      setUsername(res.data.data.username);
+    });
+  }, []);
+
   const drawer = (
     <>
       <Box sx={{ display: { xs: "block", md: "none" } }}>
@@ -219,10 +244,9 @@ export default function PrimarySearchAppBar() {
             paddingRight: "16px",
           }}
         >
-          <h1>Admin Dashboard</h1>
           <div className="alata">
             <List>
-              <Link to="/home" className="admin-dashboard__nav">
+              <Link to="" className="admin-dashboard__nav">
                 <ListItem disablePadding>
                   <ListItemButton>
                     <ListItemIcon>
@@ -398,7 +422,7 @@ export default function PrimarySearchAppBar() {
               </Link>
 
               <ListItem disablePadding>
-                <ListItemButton>
+                <ListItemButton onClick={logout}>
                   <ListItemIcon>
                     <LogoutIcon />
                   </ListItemIcon>
@@ -434,7 +458,7 @@ export default function PrimarySearchAppBar() {
       <AppBar
         position="static"
         open={mobileOpen}
-        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, background:"#6BB3ED" }}
       >
         <Toolbar>
           <IconButton
@@ -451,11 +475,11 @@ export default function PrimarySearchAppBar() {
             variant="h6"
             noWrap
             component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
+            sx={{ display: { xs: "none", sm: "block", fontFamily: "Poppins" } }}
           >
-            MUI
+            MEDICINE FINDER
           </Typography>
-          <Search>
+          {/* <Search>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
@@ -463,10 +487,10 @@ export default function PrimarySearchAppBar() {
               placeholder="Search…"
               inputProps={{ "aria-label": "search" }}
             />
-          </Search>
+          </Search> */}
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <IconButton
+            {/* <IconButton
               size="large"
               aria-label="show 4 new mails"
               color="inherit"
@@ -483,29 +507,16 @@ export default function PrimarySearchAppBar() {
               <Badge badgeContent={17} color="error">
                 <NotificationsIcon />
               </Badge>
-            </IconButton>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
-          </Box>
-          <Box sx={{ display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
+            </IconButton> */}
+            <IconButton sx={{ p: 0 }}>
+              <Avatar
+                alt="profile image"
+                src={
+                  profile_pic
+                    ? `http://localhost:90/${profile_pic}`
+                    : "https://www.pngitem.com/pimgs/m/421-4212341_default-avatar-svg-hd-png-download.png"
+                }
+              />
             </IconButton>
           </Box>
         </Toolbar>
