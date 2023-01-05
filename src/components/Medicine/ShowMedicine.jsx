@@ -32,11 +32,15 @@ const config = {
   },
 };
 function Row(props) {
-  const { row, approveBook, rejectBook } = props;
+  const { row } = props;
   const [open, setOpen] = React.useState(false);
   const [view, setView] = React.useState(false);
   const handleOpen = () => setView(true);
   const handleClose = () => setView(false);
+  const [updateOpen, setUpdateOpen] = useState(false);
+  const handleUpdateOpen = () => setUpdateOpen(true);
+  const handleUpdateClose = () => setUpdateOpen(false);
+
   const style = {
     position: "absolute",
     top: "50%",
@@ -47,6 +51,30 @@ function Row(props) {
     border: "2px solid #000",
     boxShadow: 24,
     p: 4,
+  };
+
+  const deleteMedicine = () => {
+    console.log(row._id);
+    axios
+      .delete("http://localhost:90/medicine/delete/" + row._id, config)
+      .then((result) => {
+        console.log(result);
+        if (result.data.success) {
+          console.log("Medicine Deleted Successfull");
+          toast.success(
+            "Medicine Deleted Successfully",
+            { toastId: "Delete Success" },
+            setTimeout(() => {
+              window.location.reload();
+            }, 1500)
+          );
+        } else {
+          console.log("Please Try Again!!!");
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
   return (
     <React.Fragment>
@@ -124,7 +152,7 @@ function Row(props) {
                     <button
                       className="approve--btn"
                       onClick={(e) => {
-                        // rejectBook(row._id, e);
+                        deleteMedicine(row._id, e);
                       }}
                       data-test="yes-btn"
                     >
