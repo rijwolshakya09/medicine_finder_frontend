@@ -3,7 +3,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { Box, Button, CardActionArea, CardActions, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "./home.scss";
@@ -20,13 +20,13 @@ const Home = () => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
 
-  const config = {
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("token"),
-    },
-  };
-
   useEffect(() => {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    };
+
     axios.get("http://localhost:90/pharmacy/get", config).then((res) => {
       console.log(res.data);
       setFirstName(res.data.data.first_name);
