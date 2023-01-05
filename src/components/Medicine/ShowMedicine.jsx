@@ -25,6 +25,7 @@ import { Icon } from '@iconify/react';
 import MedicationIcon from "@mui/icons-material/Medication";
 import { Button } from "@mui/material";
 import AddMedicine from "./AddMedicine";
+import UpdateMedicine from "./UpdateMedicine";
 
 const config = {
   headers: {
@@ -49,6 +50,18 @@ function Row(props) {
     width: 400,
     bgcolor: "background.paper",
     border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
+
+  const style1 = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: "70%",
+    bgcolor: "background.paper",
+    borderRadius: "10px",
     boxShadow: 24,
     p: 4,
   };
@@ -122,13 +135,21 @@ function Row(props) {
           <div className="d-flex  align-items-center justify-content-center">
             <button
               className="approve--btn"
-              onClick={(e) => {
-                approveBook(row._id, e);
-              }}
+              onClick={handleUpdateOpen}
               data-test="approve--btn"
             >
               Update&nbsp; <Icon icon="material-symbols:edit-rounded" className="fs-5" />
             </button>
+            <Modal
+              open={updateOpen}
+              onClose={handleUpdateClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style1}>
+                <UpdateMedicine medicine={row} />
+              </Box>
+            </Modal>
             <Button
               onClick={handleOpen}
               class="reject--btn"

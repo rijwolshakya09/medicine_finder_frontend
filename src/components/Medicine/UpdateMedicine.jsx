@@ -15,6 +15,7 @@ import {
   Select,
 } from "@mui/material";
 import { toast } from "react-toastify";
+import { Edit } from "@mui/icons-material";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -38,7 +39,7 @@ function getStyles(name, status, theme) {
   };
 }
 
-const UpdateMedicine = () => {
+const UpdateMedicine = ({ medicine }) => {
   const theme = useTheme();
   const [medicine_name, setMedicineName] = useState("");
   const [medicine_price, setMedicinePrice] = useState("");
@@ -46,21 +47,7 @@ const UpdateMedicine = () => {
   const [medicine_image, setMedicineImage] = useState("");
   const [status, setStatus] = useState([]);
 
-  const addMedicine = (e) => {
-    if (
-      medicine_name === "" ||
-      medicine_price === "" ||
-      medicine_description === "" ||
-      medicine_image === "" ||
-      status === ""
-    ) {
-      toast.warn("Fill all Required Field", {
-        position: "top-center",
-        autoClose: 4000,
-      });
-      return;
-    }
-
+  const updateMedicine = (e) => {
     const data = new FormData();
     data.append("medicine_name", medicine_name);
     data.append("medicine_price", medicine_price);
@@ -75,11 +62,11 @@ const UpdateMedicine = () => {
       },
     };
     axios
-      .post("http://localhost:90/medicine/add", data, config)
+      .put("http://localhost:90/medicine/update", data, config)
       .then((res) => {
         if (res.status === 201) {
-          console.log("Medicine Added Successfully");
-          toast.success("Medicine Added Successfully", {
+          console.log("Medicine Updated Successfully");
+          toast.success("Medicine Updated Successfully", {
             position: "top-center",
             autoClose: 4000,
           });
@@ -92,8 +79,6 @@ const UpdateMedicine = () => {
             autoClose: 4000,
           });
         }
-
-        // console.log(res);
       })
 
       .catch((e) => {
@@ -130,6 +115,7 @@ const UpdateMedicine = () => {
             fullWidth
             label="Medicine Name"
             width="100%"
+            defaultValue={medicine.medicine_name}
             onChange={(e) => {
               setMedicineName(e.target.value);
             }}
@@ -140,6 +126,7 @@ const UpdateMedicine = () => {
             fullWidth
             label="Medicine Price"
             width="100%"
+            defaultValue={medicine.medicine_price}
             onChange={(e) => {
               setMedicinePrice(e.target.value);
             }}
@@ -151,6 +138,7 @@ const UpdateMedicine = () => {
             maxRows={4}
             id="outlined-required outlined-multiline-static"
             label="Medicine Description"
+            defaultValue={medicine.medicine_description}
             onChange={(e) => {
               setMedicineDescription(e.target.value);
             }}
@@ -193,11 +181,11 @@ const UpdateMedicine = () => {
           <Button
             className="mt-2 fs-5 fw-bold"
             variant="contained"
-            endIcon={<AddCircleIcon className="fs-3" />}
-            onClick={addMedicine}
+            endIcon={<Edit className="fs-3" />}
+            onClick={updateMedicine}
             data-test="add-btn"
           >
-            Add Medicine
+            Update Medicine
           </Button>
         </div>
       </Box>
