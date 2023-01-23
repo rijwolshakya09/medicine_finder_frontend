@@ -13,6 +13,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { useState, useEffect } from "react";
+import logo from "../../assets/images/logo.svg"
 
 import { useTheme } from "@mui/material/styles";
 import PerfectScrollbar from "react-perfect-scrollbar";
@@ -38,6 +39,7 @@ import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import PlayLessonIcon from "@mui/icons-material/PlayLesson";
 import LogoutIcon from "@mui/icons-material/Logout";
 import axios from "axios";
+import { Icon } from "@iconify/react";
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
   ({ theme, open }) => ({
@@ -228,7 +230,7 @@ export default function PrimarySearchAppBar() {
                 <ListItem disablePadding>
                   <ListItemButton>
                     <ListItemIcon>
-                      <PeopleAltIcon />
+                      <Icon icon="icon-park-solid:medicine-bottle" className="fs-4" />
                     </ListItemIcon>
                     <ListItemText
                       disableTypography
@@ -240,7 +242,23 @@ export default function PrimarySearchAppBar() {
                   </ListItemButton>
                 </ListItem>
               </Link>
-              <Link
+              <Link className="admin-dashboard__nav" to="/dashboard/medicine">
+                <ListItem disablePadding>
+                  <ListItemButton>
+                    <ListItemIcon>
+                      <Icon icon="material-symbols:history-rounded" className="fs-4" />
+                    </ListItemIcon>
+                    <ListItemText
+                      disableTypography
+                      primary={"Booked Medicine"}
+                      sx={{
+                        fontFamily: "Alata",
+                      }}
+                    />
+                  </ListItemButton>
+                </ListItem>
+              </Link>
+              {/* <Link
                 to="/dashboard_admin/admin_approve"
                 className="admin-dashboard__nav"
                 data-test="admin_approve_btn"
@@ -259,8 +277,8 @@ export default function PrimarySearchAppBar() {
                     />
                   </ListItemButton>
                 </ListItem>
-              </Link>
-              <p className="admin-dashboard__nav--heading">Book uploads</p>
+              </Link> */}
+              {/* <p className="admin-dashboard__nav--heading">Book uploads</p>
               <Link
                 to="/dashboard_admin/ebook"
                 className="admin-dashboard__nav"
@@ -318,9 +336,9 @@ export default function PrimarySearchAppBar() {
                     />
                   </ListItemButton>
                 </ListItem>
-              </Link>
+              </Link> */}
             </List>
-            <Divider />
+            <Divider sx={{background:"black"}}/>
             <List>
               <Link className="admin-dashboard__nav">
                 <ListItem disablePadding>
@@ -339,7 +357,7 @@ export default function PrimarySearchAppBar() {
                 </ListItem>
               </Link>
 
-              <Link
+              {/* <Link
                 to="/dashboard_admin/profile"
                 className="admin-dashboard__nav"
               >
@@ -357,7 +375,7 @@ export default function PrimarySearchAppBar() {
                     />
                   </ListItemButton>
                 </ListItem>
-              </Link>
+              </Link> */}
               <Link
                 to="/dashboard_admin/adminSetting"
                 className="admin-dashboard__nav"
@@ -415,7 +433,10 @@ export default function PrimarySearchAppBar() {
       <AppBar
         position="static"
         open={mobileOpen}
-        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, background:"#6BB3ED" }}
+        sx={{
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+          background: "#6BB3ED",
+        }}
       >
         <Toolbar>
           <IconButton

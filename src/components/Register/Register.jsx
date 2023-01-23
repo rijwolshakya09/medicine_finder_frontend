@@ -44,6 +44,8 @@ const Register = () => {
   const [pharmacy_name, setPharmacyName] = useState("");
   const [description, setDescription] = useState("");
   const [address, setAddress] = useState("");
+  const [lat, setLat] = useState("");
+  const [lng, setLng] = useState("");
   const [contact_no, setContactNo] = useState("");
   const [profile_pic, setProfilePic] = useState("");
   const [pharmacy_pic, setPharmacyPic] = useState("");
@@ -58,6 +60,8 @@ const Register = () => {
       pharmacy_name === "" ||
       description === "" ||
       address === "" ||
+      lat === "" ||
+      lng === "" ||
       contact_no === "" ||
       profile_pic === "" ||
       pharmacy_pic === "" ||
@@ -79,6 +83,8 @@ const Register = () => {
     data.append("pharmacy_name", pharmacy_name);
     data.append("description", description);
     data.append("address", address);
+    data.append("lat", lat);
+    data.append("lng", lng);
     data.append("contact_no", contact_no);
     data.append("profile_pic", profile_pic);
     data.append("pharmacy_pic", pharmacy_pic);
@@ -235,23 +241,61 @@ const Register = () => {
                     setDescription(e.target.value);
                   }}
                 />
-                <TextField
-                  required
-                  id="outlined-required fullWidth"
-                  fullWidth
-                  label="Address"
-                  width="100%"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <LocationOnIcon sx={{ color: "#6BB3ED" }} />
-                      </InputAdornment>
-                    ),
-                  }}
-                  onChange={(e) => {
-                    setAddress(e.target.value);
-                  }}
-                />
+                <Box sx={{ display: "flex" }}>
+                  <TextField
+                    className="me-2"
+                    required
+                    id="outlined-required fullWidth"
+                    fullWidth
+                    label="Address"
+                    width="100%"
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <LocationOnIcon sx={{ color: "#6BB3ED" }} />
+                        </InputAdornment>
+                      ),
+                    }}
+                    onChange={(e) => {
+                      setAddress(e.target.value);
+                    }}
+                  />
+                  <TextField
+                    required
+                    className="me-2"
+                    id="outlined-required fullWidth"
+                    fullWidth
+                    label="Latitude"
+                    width="100%"
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <LocationOnIcon sx={{ color: "#6BB3ED" }} />
+                        </InputAdornment>
+                      ),
+                    }}
+                    onChange={(e) => {
+                      setLat(e.target.value);
+                    }}
+                  />
+                  <TextField
+                    required
+                    id="outlined-required fullWidth"
+                    fullWidth
+                    label="Longitude"
+                    width="100%"
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <LocationOnIcon sx={{ color: "#6BB3ED" }} />
+                        </InputAdornment>
+                      ),
+                    }}
+                    onChange={(e) => {
+                      setLng(e.target.value);
+                    }}
+                  />
+                </Box>
                 <TextField
                   required
                   id="outlined-required fullWidth"
@@ -361,7 +405,7 @@ const Register = () => {
                       </InputAdornment>
                     }
                     label="Password"
-                    onChange={(e) =>{
+                    onChange={(e) => {
                       setPassword(e.target.value);
                     }}
                   />

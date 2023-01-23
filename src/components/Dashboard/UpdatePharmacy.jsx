@@ -3,11 +3,13 @@ import Box from "@mui/material/Box";
 import { useTheme } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 import axios from "axios";
 import { useState } from "react";
 
 import {
   Button,
+  InputAdornment,
   InputLabel,
   MenuItem,
   OutlinedInput,
@@ -38,21 +40,23 @@ function getStyles(name, status, theme) {
   };
 }
 
-const UpdateMedicine = ({ medicine }) => {
+const UpdatePharmacy = ({ details }) => {
   const theme = useTheme();
-  const [medicine_name, setMedicineName] = useState("");
-  const [medicine_price, setMedicinePrice] = useState("");
-  const [medicine_description, setMedicineDescription] = useState("");
-  const [medicine_image, setMedicineImage] = useState("");
-  const [status, setStatus] = useState([]);
+  const [pharmacy_name, setPharmacyName] = useState("");
+  const [address, setAddress] = useState("");
+  const [description, setDescription] = useState("");
+  const [lat, setLat] = useState("");
+  const [lng, setLng] = useState("");
+  const [pharmacy_pic, setPharmacyPic] = useState("");
 
-  const updateMedicine = (e) => {
+  const updatePharmacy = (e) => {
     const data = new FormData();
-    data.append("medicine_name", medicine_name);
-    data.append("medicine_price", medicine_price);
-    data.append("medicine_description", medicine_description);
-    data.append("medicine_image", medicine_image);
-    data.append("status", status);
+    data.append("pharmacy_name", pharmacy_name);
+    data.append("address", address);
+    data.append("description", description);
+    data.append("pharmacy_pic", pharmacy_pic);
+    data.append("lat", lat);
+    data.append("lng", lng);
     console.log(data);
 
     const config = {
@@ -61,15 +65,15 @@ const UpdateMedicine = ({ medicine }) => {
       },
     };
     axios
-      .put("http://localhost:90/medicine/update", data, config)
+      .put("http://localhost:90/pharmacy/update", data, config)
       .then((res) => {
         if (res.status === 201) {
-          console.log("Medicine Updated Successfully");
-          toast.success("Medicine Updated Successfully", {
+          console.log("Pharmacy Updated Successfully");
+          toast.success("Pharmacy Updated Successfully", {
             position: "top-center",
             autoClose: 4000,
           });
-          window.location.replace("/dashboard/medicine");
+          window.location.replace("/dashboard");
         } else {
           console.log("Please Try Again! Something Went Wrong!!!", res);
           toast.error("Somthing went wrong!", {
@@ -83,16 +87,6 @@ const UpdateMedicine = ({ medicine }) => {
       .catch((e) => {
         console.log(e);
       });
-  };
-
-  const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setStatus(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
   };
 
   return (
@@ -112,22 +106,22 @@ const UpdateMedicine = ({ medicine }) => {
             required
             id="outlined-required fullWidth"
             fullWidth
-            label="Medicine Name"
+            label="Pharmacy Name"
             width="100%"
-            defaultValue={medicine.medicine_name}
+            defaultValue={details.pharmacy_name}
             onChange={(e) => {
-              setMedicineName(e.target.value);
+              setPharmacyName(e.target.value);
             }}
           />
           <TextField
             required
             id="outlined-required fullWidth"
             fullWidth
-            label="Medicine Price"
+            label="Address"
             width="100%"
-            defaultValue={medicine.medicine_price}
+            defaultValue={details.address}
             onChange={(e) => {
-              setMedicinePrice(e.target.value);
+              setAddress(e.target.value);
             }}
           />
           <TextField
@@ -136,55 +130,73 @@ const UpdateMedicine = ({ medicine }) => {
             rows={2}
             maxRows={4}
             id="outlined-required outlined-multiline-static"
-            label="Medicine Description"
-            defaultValue={medicine.medicine_description}
+            label="Description"
+            defaultValue={details.description}
             onChange={(e) => {
-              setMedicineDescription(e.target.value);
+              setDescription(e.target.value);
             }}
           />
-          <FormControl sx={{ pb: 2 }} required>
-            <InputLabel id="demo-multiple-name-label">Status</InputLabel>
-            <Select
-              labelId="demo-multiple-name-label"
-              id="demo-multiple-name"
-              value={status}
-              onChange={handleChange}
-              input={<OutlinedInput label="Book Category" />}
-              MenuProps={MenuProps}
-            >
-              {statusTypes.map((name) => (
-                <MenuItem
-                  key={name}
-                  value={name}
-                  style={getStyles(name, status, theme)}
-                >
-                  {name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
           <TextField
             required
             id="outlined-required fullWidth"
             type="file"
-            label="Medicine Image"
+            label="Pharmacy Image"
             fullWidth
             width="100%"
             InputLabelProps={{
               shrink: true,
             }}
             onChange={(e) => {
-              setMedicineImage(e.target.files[0]);
+              setPharmacyPic(e.target.files[0]);
             }}
           />
+          <Box sx={{ display: "flex", width: "100%"  }}>
+            <TextField
+              required
+              className="me-2"
+              id="outlined-required fullWidth"
+              fullWidth
+              label="Latitude"
+              width="100%"
+              defaultValue={details.lat}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <LocationOnIcon sx={{ color: "#6BB3ED" }} />
+                  </InputAdornment>
+                ),
+              }}
+              onChange={(e) => {
+                setLat(e.target.value);
+              }}
+            />
+            <TextField
+              required
+              id="outlined-required fullWidth"
+              fullWidth
+              label="Longitude"
+              width="100%"
+              defaultValue={details.lng}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <LocationOnIcon sx={{ color: "#6BB3ED" }} />
+                  </InputAdornment>
+                ),
+              }}
+              onChange={(e) => {
+                setLng(e.target.value);
+              }}
+            />
+          </Box>
           <Button
             className="mt-2 fs-5 fw-bold"
             variant="contained"
             endIcon={<Edit className="fs-3" />}
-            onClick={updateMedicine}
+            onClick={updatePharmacy}
             data-test="add-btn"
           >
-            Update Medicine
+            Update Pharmacy
           </Button>
         </div>
       </Box>
@@ -192,4 +204,4 @@ const UpdateMedicine = ({ medicine }) => {
   );
 };
 
-export default UpdateMedicine;
+export default UpdatePharmacy;
