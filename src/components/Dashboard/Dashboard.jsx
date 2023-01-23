@@ -242,7 +242,7 @@ export default function PrimarySearchAppBar() {
                   </ListItemButton>
                 </ListItem>
               </Link>
-              <Link className="admin-dashboard__nav" to="/dashboard/medicine">
+              <Link className="admin-dashboard__nav" to="/dashboard/bookedmedicine">
                 <ListItem disablePadding>
                   <ListItemButton>
                     <ListItemIcon>

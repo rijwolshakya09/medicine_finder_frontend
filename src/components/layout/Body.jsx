@@ -5,6 +5,7 @@ import Home from "../Dashboard/Home";
 
 import Login from "../Login/Login";
 import ShowMedicine from "../Medicine/ShowMedicine";
+import BookedMedicine from "../Medicine/BookedMedicine";
 import Register from "../Register/Register";
 
 const Body = () => {
@@ -18,6 +19,7 @@ const Body = () => {
         <Route path="/dashboard" element={<Dashboard />}>
           <Route path="" element={<Home />} />
           <Route path="medicine" element={<ShowMedicine />} />
+          <Route path="bookedmedicine" element={<BookedMedicine />} />
           {/* <Route path="" element={<DashboardHome />} />
           <Route path="admin_approve" element={<AdminApprove />} />
           <Route path="audio_book" element={<AudioBookUpload />} />
