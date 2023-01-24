@@ -76,7 +76,7 @@ const Home = () => {
 
   return (
     <div className="container-fluid">
-      <div className="text-center fs-1 fw-bold pb-4">Pharmacy Dashboard</div>
+      <div className="text-center fs-1 fw-bold pb-2">Pharmacy Dashboard</div>
       <Grid
         container
         spacing={0}
